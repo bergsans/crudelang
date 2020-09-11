@@ -34,7 +34,6 @@ function collectCharacters(fn, input, currentPosition) {
     currentPosition++;
     tempValue += input[currentPosition];
   }
-  console.log(tempValue);
   return tempValue;
 }
 
