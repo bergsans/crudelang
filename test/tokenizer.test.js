@@ -10,7 +10,7 @@ test('1', () => {
   expect(tokenize('1')).toEqual([
     {
       type: 'INTEGER',
-      value: '1'
+      value: 1
     },
     {
       type: 'EOF'
@@ -22,7 +22,7 @@ test('11', () => {
   expect(tokenize('11')).toEqual([
     {
       type: 'INTEGER',
-      value: '11'
+      value: 11
     },
     {
       type: 'EOF'
@@ -36,7 +36,7 @@ test.skip('11 + a', () => {
   expect(tokenize('11 + aaaa')).toEqual([
     {
       type: 'INTEGER',
-      value: '11'
+      value: 11
     },
     {
       type: 'PLUS',
@@ -56,7 +56,7 @@ test('11 + 4', () => {
   expect(tokenize('11 + 4')).toEqual([
     {
       type: 'INTEGER',
-      value: '11'
+      value: 11
     },
     {
       type: 'PLUS',
@@ -64,7 +64,7 @@ test('11 + 4', () => {
     },
     {
       type: 'INTEGER',
-      value: '4'
+      value: 4
     },
     {
       type: 'EOF'

@@ -57,7 +57,7 @@ function tokenize(input, currentPosition = 0, tokens = []) {
        {
          type: TOKEN_TYPES[name],
          value: name === 'isDigit'
-          ? collectCharacters(fn, input, currentPosition)
+          ? parseInt(collectCharacters(fn, input, currentPosition))
           : input[currentPosition],
        }
     ]
