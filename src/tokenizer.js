@@ -14,6 +14,7 @@ const tokenChecks = {
   isDivision: (char) => char === '/',
   isSubstraction: (char) => /\-/.test(char),
   isAddition: (char) => /\+/.test(char),
+  isGreaterThan: (char) => />/.test(char),
   isWhiteSpace: (char) => / /.test(char),
   isLeftParen: (char) => /\(/.test(char),
   isRightParen: (char) => /\)/.test(char),
@@ -26,6 +27,7 @@ const TOKEN_TYPES = {
   isDivision: 'DIV',
   isSubstraction: 'MINUS',
   isAddition: 'PLUS',
+  isGreaterThan: 'GT',
   isWhiteSpace: 'WHITE_SPACE',
   isLeftParen: 'OPEN_PAREN',
   isRightParen: 'CLOSE_PAREN',
@@ -34,9 +36,9 @@ const TOKEN_TYPES = {
 
 const removeWhiteSpace = (token) => token.type !== 'WHITE_SPACE';
 
-function collectCharacters(fn, input, currentPosition) {
+function collectCharacters(fnName, input, currentPosition) {
   let tempValue = input[currentPosition];
-  while(fn(input[currentPosition + 1])) {
+  while(currentPosition + 1 < input.length && tokenChecks[fnName](input[currentPosition + 1])) {
     currentPosition++;
     tempValue += input[currentPosition];
   }
@@ -52,18 +54,18 @@ function tokenize(input, currentPosition = 0, tokens = []) {
     .entries(tokenChecks)
     .find(([_name, fn]) => fn(input[currentPosition]));
   if(token) {
-   const [name, fn] = token;
+   const [name] = token;
    return tokenize(
      input,
-     name === 'isDigit'
-      ? currentPosition + collectCharacters(fn, input, currentPosition).length
+     ['isDigit', 'isAlphabetic'].includes(name)
+      ? currentPosition + collectCharacters(name, input, currentPosition).length
       : currentPosition + 1,
     [
        ...tokens,
        {
          type: TOKEN_TYPES[name],
-         value: name === 'isDigit'
-          ? parseInt(collectCharacters(fn, input, currentPosition))
+         value: ['isDigit', 'isAlphabetic'].includes(name)
+          ? collectCharacters(name, input, currentPosition)
           : input[currentPosition],
        }
     ]

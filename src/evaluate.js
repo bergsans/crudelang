@@ -38,7 +38,7 @@ function evaluate(node) {
   } else if(node.type === 'BinaryExpression') {
     return visitBinaryExpression(node.value);
   } else if(node.type === 'INTEGER') {
-    return node.value;
+    return parseInt(node.value);
   }
 
 }

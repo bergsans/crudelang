@@ -4,7 +4,7 @@ const { parse } = require('../src/parser.js');
 test('parse 1', () => {
   expect(parse(tokenize('1'))).toEqual({
     type: 'INTEGER',
-    value: 1
+    value: '1'
   });
 });
 
@@ -14,7 +14,7 @@ test('parse 1 + 1', () => {
     value: {
       left: {
         type: 'INTEGER',
-        value: 1
+        value: '1'
       },
       op: {
         type: 'PLUS',
@@ -22,7 +22,7 @@ test('parse 1 + 1', () => {
       },
       right: {
         type: 'INTEGER',
-        value: 1
+        value: '1'
       }
     }
   });
@@ -34,7 +34,7 @@ test('parse 1 + 1 + 1', () => {
     value: {
       left: {
         type: 'INTEGER',
-        value: 1
+        value: '1'
       },
       op: {
         type: 'PLUS',
@@ -45,7 +45,7 @@ test('parse 1 + 1 + 1', () => {
         value: {
           left: {
             type: 'INTEGER',
-            value: 1
+            value: '1'
           },
           op: {
             type: 'PLUS',
@@ -53,7 +53,7 @@ test('parse 1 + 1 + 1', () => {
           },
           right: {
             type: 'INTEGER',
-            value: 1
+            value: '1'
           }
         }
       }
@@ -67,7 +67,7 @@ test('parse 1 + (1 + 1)', () => {
     value: {
       left: {
         type: 'INTEGER',
-        value: 1
+        value: '1'
       },
       op: {
         type: 'PLUS',
@@ -80,7 +80,7 @@ test('parse 1 + (1 + 1)', () => {
           value: {
             left: {
               type: 'INTEGER',
-              value: 1
+              value: '1'
             },
             op: {
               type: 'PLUS',
@@ -88,7 +88,7 @@ test('parse 1 + (1 + 1)', () => {
             },
             right: {
               type: 'INTEGER',
-              value: 1
+              value: '1'
             }
           }
         }

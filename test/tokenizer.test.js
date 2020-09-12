@@ -10,7 +10,31 @@ test('1', () => {
   expect(tokenize('1')).toEqual([
     {
       type: 'INTEGER',
-      value: 1
+      value: '1'
+    },
+    {
+      type: 'EOF'
+    }
+  ]);
+});
+
+test('a', () => {
+  expect(tokenize('a')).toEqual([
+    {
+      type: 'IDENTIFIER',
+      value: 'a'
+    },
+    {
+      type: 'EOF'
+    }
+  ]);
+});
+
+test('aaa', () => {
+  expect(tokenize('aaa')).toEqual([
+    {
+      type: 'IDENTIFIER',
+      value: 'aaa'
     },
     {
       type: 'EOF'
@@ -22,7 +46,7 @@ test('11', () => {
   expect(tokenize('11')).toEqual([
     {
       type: 'INTEGER',
-      value: 11
+      value: '11'
     },
     {
       type: 'EOF'
@@ -30,33 +54,12 @@ test('11', () => {
   ]);
 });
 
-test.skip('11 + a', () => {
-  const v = tokenize('11 + aaaa');
-  console.log(v);
-  expect(tokenize('11 + aaaa')).toEqual([
-    {
-      type: 'INTEGER',
-      value: 11
-    },
-    {
-      type: 'PLUS',
-      value: '+'
-    },
-    {
-      type: 'IDENTIFIER',
-      value: 'a'
-    },
-    {
-      type: 'EOF'
-    }
-  ]);
-});
 
 test('11 + 4', () => {
   expect(tokenize('11 + 4')).toEqual([
     {
       type: 'INTEGER',
-      value: 11
+      value: '11'
     },
     {
       type: 'PLUS',
@@ -64,7 +67,7 @@ test('11 + 4', () => {
     },
     {
       type: 'INTEGER',
-      value: 4
+      value: '4'
     },
     {
       type: 'EOF'
