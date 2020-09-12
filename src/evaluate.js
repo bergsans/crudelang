@@ -1,5 +1,7 @@
 function visitBinaryExpression(node) {
-  if(node.op.type === 'PLUS') {
+  if(node.op.type === 'MULT') {
+    return evaluate(node.left) * evaluate(node.right);
+  } else if(node.op.type === 'PLUS') {
     return evaluate(node.left) + evaluate(node.right);
   } else if(node.op.type === 'MINUS') {
     return evaluate(node.left) - evaluate(node.right);

@@ -17,7 +17,7 @@ function parse(tokens, node) {
     return node;
   } else if(token.type === 'INTEGER') {
     return parse(tokens, token);
-  } else if(token.type === 'PLUS' || token.type === 'MINUS') {
+  } else if(['MULT','PLUS', 'MINUS'].includes(token.type)) {
     return parse(tokens, {
       type: 'BinaryExpression',
       value: {

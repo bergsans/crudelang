@@ -10,6 +10,7 @@ const isEOF = (char) => char === undefined
 
 const tokenChecks = {
   isDigit: (char) => /[0-9]/.test(char),
+  isMultiplication: (char) => /\*/.test(char),
   isSubstraction: (char) => /\-/.test(char),
   isAddition: (char) => /\+/.test(char),
   isWhiteSpace: (char) => / /.test(char),
@@ -20,6 +21,7 @@ const tokenChecks = {
 
 const TOKEN_TYPES = {
   isDigit: 'INTEGER',
+  isMultiplication: 'MULT',
   isSubstraction: 'MINUS',
   isAddition: 'PLUS',
   isWhiteSpace: 'WHITE_SPACE',

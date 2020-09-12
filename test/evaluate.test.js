@@ -23,3 +23,13 @@ test('eval 4 - 2', () => {
 test('eval 6 + (4 - 2)', () => {
   expect(interpret('6 + (4 - 2)')).toEqual(8);
 });
+
+test('eval 6 * 6', () => {
+  expect(interpret('6 * 6')).toEqual(36);
+});
+
+test('eval 2 + 6 * 6', () => {
+  expect(interpret('2 + 6 * 6')).toEqual(38);
+});
+
+
