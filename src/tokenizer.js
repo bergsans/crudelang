@@ -18,7 +18,8 @@ const tokenChecks = {
   isWhiteSpace: (char) => / /.test(char),
   isLeftParen: (char) => /\(/.test(char),
   isRightParen: (char) => /\)/.test(char),
-  isAlphabetic: (char) => /[A-Za-z]/.test(char)
+  isAlphabetic: (char) => /[A-Za-z]/.test(char),
+  isAssignment: (char) => /=/.test(char)
 };
 
 const TOKEN_TYPES = {
@@ -31,7 +32,8 @@ const TOKEN_TYPES = {
   isWhiteSpace: 'WHITE_SPACE',
   isLeftParen: 'OPEN_PAREN',
   isRightParen: 'CLOSE_PAREN',
-  isAlphabetic: 'IDENTIFIER'
+  isAlphabetic: 'IDENTIFIER',
+  isAssignment: 'ASSIGN'
 };
 
 const removeWhiteSpace = (token) => token.type !== 'WHITE_SPACE';

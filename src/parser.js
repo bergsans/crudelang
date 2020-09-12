@@ -38,6 +38,12 @@ function parse(tokens, node) {
         right: parse(tokens)
       }
     });
+  } else if(token.type === 'ASSIGN') {
+    return parse(tokens, {
+      type: 'Assignment',
+      name: node,
+      value: parse(tokens)
+    });
   }
 }
 

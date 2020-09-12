@@ -61,6 +61,20 @@ test('parse 1 + 1 + 1', () => {
   });
 });
 
+test('assignment x = 3', () => {
+  expect(parse(tokenize('x = 3'))).toEqual({
+    type: 'Assignment',
+    name: {
+      type: 'IDENTIFIER',
+      value: 'x'
+    },
+    value: {
+      type: 'INTEGER',
+      value: '3'
+    }
+  });
+});
+
 test('parse 1 + (1 + 1)', () => {
   expect(parse(tokenize('1 + (1 + 1)'))).toEqual({
     type: 'BinaryExpression',

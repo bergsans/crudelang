@@ -75,6 +75,26 @@ test('11 + 4', () => {
   ]);
 });
 
+test('x = 3', () => {
+  expect(tokenize('x = 3')).toEqual([
+    {
+      type: 'IDENTIFIER',
+      value: 'x'
+    },
+    {
+      type: 'ASSIGN',
+      value: '='
+    },
+    {
+      type: 'INTEGER',
+      value: '3'
+    },
+    {
+      type: 'EOF'
+    }
+  ]);
+});
+
 test('throws at invalid character', () => {
   expect(() => tokenize('?')).toThrow('Invalid token: ?');
 });

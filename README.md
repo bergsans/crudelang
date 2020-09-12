@@ -2,6 +2,7 @@
 
 ## TODO:
 
+* Environment
 * Assignment to name
 * Boolean values
 * Logical operators
