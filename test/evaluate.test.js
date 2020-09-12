@@ -15,3 +15,11 @@ test('eval 1 + 1', () => {
 test('eval 1 + (1 + 1)', () => {
   expect(interpret('1 + (1 + 1)')).toEqual(3);
 });
+
+test('eval 4 - 2', () => {
+  expect(interpret('4 - 2')).toEqual(2);
+});
+
+test('eval 6 + (4 - 2)', () => {
+  expect(interpret('6 + (4 - 2)')).toEqual(8);
+});
