@@ -13,6 +13,7 @@ const tokenChecks = {
   isMultiplication: (char) => /\*/.test(char),
   isSubstraction: (char) => /\-/.test(char),
   isAddition: (char) => /\+/.test(char),
+  isSafeDivision: (char) => /\//.test(char),
   isWhiteSpace: (char) => / /.test(char),
   isLeftParen: (char) => /\(/.test(char),
   isRightParen: (char) => /\)/.test(char),
@@ -22,6 +23,7 @@ const tokenChecks = {
 const TOKEN_TYPES = {
   isDigit: 'INTEGER',
   isMultiplication: 'MULT',
+  isSafeDivision: 'DIV',
   isSubstraction: 'MINUS',
   isAddition: 'PLUS',
   isWhiteSpace: 'WHITE_SPACE',

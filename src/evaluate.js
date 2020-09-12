@@ -1,6 +1,10 @@
 function visitBinaryExpression(node) {
   if(node.op.type === 'MULT') {
     return evaluate(node.left) * evaluate(node.right);
+  } else if(node.op.type === 'DIV') {
+    return evaluate(node.right) !== 0
+      ? Math.round(evaluate(node.left) / evaluate(node.right))
+      : null;
   } else if(node.op.type === 'PLUS') {
     return evaluate(node.left) + evaluate(node.right);
   } else if(node.op.type === 'MINUS') {

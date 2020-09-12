@@ -32,4 +32,11 @@ test('eval 2 + 6 * 6', () => {
   expect(interpret('2 + 6 * 6')).toEqual(38);
 });
 
+test('eval 6 / 6', () => {
+  expect(interpret('6 / 6')).toEqual(1);
+});
+
+test('eval 6 / 0', () => {
+  expect(interpret('6 / 0')).toEqual(null);
+});
 
