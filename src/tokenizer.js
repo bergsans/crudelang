@@ -11,9 +11,9 @@ const isEOF = (char) => char === undefined
 const tokenChecks = {
   isDigit: (char) => /[0-9]/.test(char),
   isMultiplication: (char) => /\*/.test(char),
+  isDivision: (char) => char === '/',
   isSubstraction: (char) => /\-/.test(char),
   isAddition: (char) => /\+/.test(char),
-  isSafeDivision: (char) => /\//.test(char),
   isWhiteSpace: (char) => / /.test(char),
   isLeftParen: (char) => /\(/.test(char),
   isRightParen: (char) => /\)/.test(char),
@@ -23,7 +23,7 @@ const tokenChecks = {
 const TOKEN_TYPES = {
   isDigit: 'INTEGER',
   isMultiplication: 'MULT',
-  isSafeDivision: 'DIV',
+  isDivision: 'DIV',
   isSubstraction: 'MINUS',
   isAddition: 'PLUS',
   isWhiteSpace: 'WHITE_SPACE',
