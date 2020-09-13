@@ -1,6 +1,6 @@
 const head = (ts) => ts[0];
 
-function parse(tokens, node = {}) {
+function parse(tokens, node) {
   const token = tokens.length > 1
     ? tokens.shift()
     : head(tokens);
@@ -8,8 +8,9 @@ function parse(tokens, node = {}) {
     return node;
   }
 
-
-  if(token.type === 'ASSIGN') {
+  if(token.type === 'END') {
+    return node;
+  } else if(token.type === 'ASSIGN') {
     return parse(tokens);
   } else if(token.type === 'IDENTIFIER' && tokens[0].type === 'ASSIGN') {
     return parse(tokens, {
@@ -27,16 +28,6 @@ function parse(tokens, node = {}) {
   } else if(token.type === 'INTEGER') {
     return parse(tokens, token);
   } else if(token.type === 'IDENTIFIER') {
-    if(token.value === 'if') {
-      return parse(tokens, {
-        type: 'IfStatement',
-        test: {
-          left: node,
-          compr: token,
-          right: parse(tokens)
-        }
-      });
-    }
     return parse(tokens, token);
   } else if(['MULT','DIV', 'PLUS', 'MINUS'].includes(token.type)) {
     return parse(tokens, {

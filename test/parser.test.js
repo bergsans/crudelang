@@ -61,8 +61,8 @@ test('parse 1 + 1 + 1', () => {
   });
 });
 
-test('assignment x = 3', () => {
-  expect(parse(tokenize('x = 3'))).toEqual({
+test('assignment x = 3;', () => {
+  expect(parse(tokenize('x = 3;'))).toEqual({
     type: 'Assignment',
     name: 'x',
     value: {
@@ -70,6 +70,27 @@ test('assignment x = 3', () => {
       value: '3'
     }
   });
+});
+
+test('assignment x = 3; y = 1;', () => {
+  expect(parse(tokenize('x = 3; y = 1;'))).toEqual([
+  {
+    type: 'Assignment',
+    name: 'x',
+    value: {
+      type: 'INTEGER',
+      value: '3'
+    }
+  },
+  {
+    type: 'Assignment',
+    name: 'y',
+    value: {
+      type: 'INTEGER',
+      value: '1'
+    }
+  },
+  ]);
 });
 
 test('parse 1 + (1 + 1)', () => {
