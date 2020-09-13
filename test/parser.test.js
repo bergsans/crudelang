@@ -64,10 +64,7 @@ test('parse 1 + 1 + 1', () => {
 test('assignment x = 3', () => {
   expect(parse(tokenize('x = 3'))).toEqual({
     type: 'Assignment',
-    name: {
-      type: 'IDENTIFIER',
-      value: 'x'
-    },
+    name: 'x',
     value: {
       type: 'INTEGER',
       value: '3'
