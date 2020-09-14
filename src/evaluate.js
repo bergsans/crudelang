@@ -6,52 +6,49 @@ class UnsafeDivision extends Error {
   }
 }
 
-// if true, body...
-function visitIfStatement(node) {
-  if(node.compr.type === 'GT') {
-    return evaluate(node.left) > evaluate(node.right);
-  }
-}
-
-function visitBinaryExpression(node) {
+function visitBinaryExpression(node, env) {
   if(node.op.type === 'MULT') {
-    return evaluate(node.left) * evaluate(node.right);
+    return evaluate(node.left, env) * evaluate(node.right, env);
   } else if(node.op.type === 'DIV') {
     if(evaluate(node.right) === 0) {
       throw new UnsafeDivision(node);
     } else {
-      return Math.round(evaluate(node.left) / evaluate(node.right));
+      return Math.round(evaluate(node.left, env) / evaluate(node.right, env));
     }
   } else if(node.op.type === 'PLUS') {
-    return evaluate(node.left) + evaluate(node.right);
+    return evaluate(node.left, env) + evaluate(node.right, env);
   } else if(node.op.type === 'MINUS') {
-    return evaluate(node.left) - evaluate(node.right);
+    return evaluate(node.left, env) - evaluate(node.right, env);
   }
 }
 
-function visitExpression(node) {
+function visitExpression(node, env) {
   if(node.type === 'Expression') {
-    return visitExpression(node.value)
+    return visitExpression(node.value, env)
   } else if(node.type === 'BinaryExpression') {
-    return visitBinaryExpression(node.value);
+    return visitBinaryExpression(node.value, env);
   }
 }
 
-function evaluate(node) {
-  if(node.body && node.body.length > 1) {
-    for(node of node.body) {
-      return evaluate(node);
-    }
-  } else if(node.type === 'Expression') {
-    return visitExpression(node.value);
-  } else if(node.type === 'BinaryExpression') {
-    return visitBinaryExpression(node.value);
-  } else if(node.type === 'IfStatement') {
-    return visitIfStatement(node.value);
-  } else if(['INTEGER', 'IDENTIFIER'].includes(node.type)) {
-    return parseInt(node.value);
+function evaluate(input, env={}) {
+  if(input === undefined) { return; }
+  if(Array.isArray(input)) {
+    const evaluatedExpressions = input.map((x) => evaluate(x, env))
+    // remove side-effects and go for first return
+    return evaluatedExpressions.find((x) => x !== undefined);
+  } else if(input.type === 'ReturnStatement') {
+    return evaluate(input.value, env);
+  } else if(input.type === 'Assignment') {
+    env[input.name] = evaluate(input.value, env);
+  } else if(input.type === 'Expression') {
+    return visitExpression(input.value, env);
+  } else if(input.type === 'BinaryExpression') {
+    return visitBinaryExpression(input.value, env);
+  } else if(input.type === 'INTEGER') {
+    return parseInt(input.value, env);
+  } else if(input.type === 'IDENTIFIER') {
+    return env[input.value];
   }
-
 }
 
 module.exports = {
