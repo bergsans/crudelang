@@ -157,3 +157,38 @@ test('parse 1 + (1 + 1)', () => {
     }
   });
 });
+
+test('if', () => {
+  expect(parse(tokenize('if(3 > 2) { return 55 }'))).toEqual({
+    "type": "IfStatement",
+    "test": {
+      "type": "Expression",
+      "value": {
+        "type": "BinaryExpression",
+        "value": {
+          "left": {
+            "type": "INTEGER",
+            "value": "3"
+          },
+          "op": {
+            "type": "GT",
+            "value": ">"
+          },
+          "right": {
+            "type": "INTEGER",
+            "value": "2"
+          }
+        }
+      }
+    },
+    "consequent": [
+      {
+        type: "ReturnStatement",
+        value: {
+          "type": "INTEGER",
+          "value": "55"
+        }
+      }
+    ]
+  });
+});

@@ -14,13 +14,16 @@ const tokenChecks = {
   isDivision: (char) => char === '/',
   isSubstraction: (char) => /\-/.test(char),
   isAddition: (char) => /\+/.test(char),
+  isLesserThan: (char) => /</.test(char),
   isGreaterThan: (char) => />/.test(char),
   isWhiteSpace: (char) => / /.test(char),
   isLeftParen: (char) => /\(/.test(char),
   isRightParen: (char) => /\)/.test(char),
   isAlphabetic: (char) => /[A-Za-z]/.test(char),
   isAssignment: (char) => /=/.test(char),
-  isEndOfStatement: (char) => char === ';'
+  isEndOfStatement: (char) => char === ';',
+  isOpenBlock: (char) => char === '{',
+  isCloseBlock: (char) => char === '}'
 };
 
 const TOKEN_TYPES = {
@@ -29,13 +32,16 @@ const TOKEN_TYPES = {
   isDivision: 'DIV',
   isSubstraction: 'MINUS',
   isAddition: 'PLUS',
+  isLesserThan: 'LT',
   isGreaterThan: 'GT',
   isWhiteSpace: 'WHITE_SPACE',
   isLeftParen: 'OPEN_PAREN',
   isRightParen: 'CLOSE_PAREN',
   isAlphabetic: 'IDENTIFIER',
   isAssignment: 'ASSIGN',
-  isEndOfStatement: 'END'
+  isEndOfStatement: 'END',
+  isOpenBlock: 'OPEN_SCOPE',
+  isCloseBlock: 'CLOSE_SCOPE'
 };
 
 const removeWhiteSpace = (token) => token.type !== 'WHITE_SPACE';

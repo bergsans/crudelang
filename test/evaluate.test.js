@@ -16,6 +16,9 @@ test('x = 3; return x;', () => {
   expect(interpret('x = 3; y = 5; return x;')).toBe(3);
 });
 
+test('x = 3; x = x + 1; return x;', () => {
+  expect(interpret('x = 3; x = x + 1; return x;')).toBe(4);
+});
 
 //test('eval 1', () => {
 //  expect(interpret('1')).toEqual(1);
