@@ -16,7 +16,7 @@ const tokenChecks = {
   isAddition: (char) => /\+/.test(char),
   isLesserThan: (char) => /</.test(char),
   isGreaterThan: (char) => />/.test(char),
-  isWhiteSpace: (char) => / /.test(char),
+  isWhiteSpace: (char) => char === ' ' || char === '\n' || char === '\t',
   isLeftParen: (char) => /\(/.test(char),
   isRightParen: (char) => /\)/.test(char),
   isAlphabetic: (char) => /[A-Za-z]/.test(char),

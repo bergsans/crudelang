@@ -30,6 +30,16 @@ function visitExpression(node, env) {
   }
 }
 
+function visitIfStatement(node, env) {
+  if(node.test.value.value.op.type === 'GT') {
+    if(evaluate(node.test.value.value.left, env) > evaluate(node.test.value.value.right, env)) {
+      return evaluate(node.consequent);
+    } else {
+      return;
+    }
+  }
+}
+
 function evaluate(input, env={}) {
   if(input === undefined) { return; }
   if(Array.isArray(input)) {
@@ -38,6 +48,8 @@ function evaluate(input, env={}) {
     return evaluatedExpressions.find((x) => x !== undefined);
   } else if(input.type === 'ReturnStatement') {
     return evaluate(input.value, env);
+  } else if(input.type === 'IfStatement') {
+    return visitIfStatement(input, env);
   } else if(input.type === 'Assignment') {
     env[input.name] = evaluate(input.value, env);
   } else if(input.type === 'Expression') {
