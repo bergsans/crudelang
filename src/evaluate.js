@@ -60,6 +60,10 @@ function visitWhile(node, env) {
   }
 }
 
+function print(output, env) {
+  console.log(evaluate(output.value, env));
+}
+
 function evaluate(input, env = {}) {
   if (input === undefined) {
     throw new UndefinedNode();
@@ -72,6 +76,8 @@ function evaluate(input, env = {}) {
     return evaluate(input.value, env);
   } else if (input.type === 'IfStatement') {
     return visitIfStatement(input, env);
+  } else if (input.type === 'PrintStatement') {
+    print(input.msg, env);
   } else if (input.type === 'While') {
     return visitWhile(input, env);
   } else if (input.type === 'Assignment') {

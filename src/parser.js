@@ -46,6 +46,13 @@ function parse(tokens, body = [], node) {
     })));
   }
 
+  if (token.type === 'IDENTIFIER' && token.value === 'print') {
+    return parse(tokens, parse(tokens, body.concat({
+      type: 'PrintStatement',
+      msg: parse(tokens),
+    })));
+  }
+
   if (token.type === 'IDENTIFIER' && token.value === 'while') {
     return parse(tokens, parse(tokens, body.concat({
       type: 'While',

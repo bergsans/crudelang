@@ -97,3 +97,17 @@ test('while', () => {
   `));
   expect(evaluate(r)).toEqual(20);
 });
+
+test('print', () => {
+  const r = parse(tokenize(`
+  {
+    x = 4;
+    while(x < 20) {
+      print(x);
+      x = x + 1;
+    }
+    return x;
+  }
+  `));
+  expect(evaluate(r)).toEqual(20);
+});
