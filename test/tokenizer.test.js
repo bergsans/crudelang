@@ -2,7 +2,7 @@ const { tokenize } = require('../src/tokenizer.js');
 
 test('empty input', () => {
   expect(tokenize('')).toEqual([{
-    type: 'EOF'
+    type: 'EOF',
   }]);
 });
 
@@ -10,11 +10,11 @@ test('1', () => {
   expect(tokenize('1')).toEqual([
     {
       type: 'INTEGER',
-      value: '1'
+      value: '1',
     },
     {
-      type: 'EOF'
-    }
+      type: 'EOF',
+    },
   ]);
 });
 
@@ -22,11 +22,11 @@ test('a', () => {
   expect(tokenize('a')).toEqual([
     {
       type: 'IDENTIFIER',
-      value: 'a'
+      value: 'a',
     },
     {
-      type: 'EOF'
-    }
+      type: 'EOF',
+    },
   ]);
 });
 
@@ -34,11 +34,11 @@ test('aaa', () => {
   expect(tokenize('aaa')).toEqual([
     {
       type: 'IDENTIFIER',
-      value: 'aaa'
+      value: 'aaa',
     },
     {
-      type: 'EOF'
-    }
+      type: 'EOF',
+    },
   ]);
 });
 
@@ -46,32 +46,31 @@ test('11', () => {
   expect(tokenize('11')).toEqual([
     {
       type: 'INTEGER',
-      value: '11'
+      value: '11',
     },
     {
-      type: 'EOF'
-    }
+      type: 'EOF',
+    },
   ]);
 });
-
 
 test('11 + 4', () => {
   expect(tokenize('11 + 4')).toEqual([
     {
       type: 'INTEGER',
-      value: '11'
+      value: '11',
     },
     {
       type: 'PLUS',
-      value: '+'
+      value: '+',
     },
     {
       type: 'INTEGER',
-      value: '4'
+      value: '4',
     },
     {
-      type: 'EOF'
-    }
+      type: 'EOF',
+    },
   ]);
 });
 
@@ -79,19 +78,19 @@ test('x = 3', () => {
   expect(tokenize('x = 3')).toEqual([
     {
       type: 'IDENTIFIER',
-      value: 'x'
+      value: 'x',
     },
     {
       type: 'ASSIGN',
-      value: '='
+      value: '=',
     },
     {
       type: 'INTEGER',
-      value: '3'
+      value: '3',
     },
     {
-      type: 'EOF'
-    }
+      type: 'EOF',
+    },
   ]);
 });
 

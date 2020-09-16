@@ -6,13 +6,13 @@ class TokenError extends Error {
   }
 }
 
-const isEOF = (char) => char === undefined
+const isEOF = (char) => char === undefined;
 
 const tokenChecks = {
   isDigit: (char) => /[0-9]/.test(char),
   isMultiplication: (char) => /\*/.test(char),
   isDivision: (char) => char === '/',
-  isSubstraction: (char) => /\-/.test(char),
+  isSubstraction: (char) => /-/.test(char),
   isAddition: (char) => /\+/.test(char),
   isLesserThan: (char) => /</.test(char),
   isGreaterThan: (char) => />/.test(char),
@@ -23,7 +23,7 @@ const tokenChecks = {
   isAssignment: (char) => /=/.test(char),
   isEndOfStatement: (char) => char === ';',
   isOpenBlock: (char) => char === '{',
-  isCloseBlock: (char) => char === '}'
+  isCloseBlock: (char) => char === '}',
 };
 
 const TOKEN_TYPES = {
@@ -41,14 +41,14 @@ const TOKEN_TYPES = {
   isAssignment: 'ASSIGN',
   isEndOfStatement: 'END',
   isOpenBlock: 'OPEN_SCOPE',
-  isCloseBlock: 'CLOSE_SCOPE'
+  isCloseBlock: 'CLOSE_SCOPE',
 };
 
 const removeWhiteSpace = (token) => token.type !== 'WHITE_SPACE';
 
 function collectCharacters(fnName, input, currentPosition) {
   let tempValue = input[currentPosition];
-  while(currentPosition + 1 < input.length && tokenChecks[fnName](input[currentPosition + 1])) {
+  while (currentPosition + 1 < input.length && tokenChecks[fnName](input[currentPosition + 1])) {
     currentPosition++;
     tempValue += input[currentPosition];
   }
@@ -56,34 +56,34 @@ function collectCharacters(fnName, input, currentPosition) {
 }
 
 function tokenize(input, currentPosition = 0, tokens = []) {
-  if(isEOF(input[currentPosition])) {
+  if (isEOF(input[currentPosition])) {
     return [...tokens, { type: 'EOF' }].filter(removeWhiteSpace);
   }
 
   const token = Object
     .entries(tokenChecks)
     .find(([_name, fn]) => fn(input[currentPosition]));
-  if(token) {
-   const [name] = token;
-   return tokenize(
-     input,
-     ['isDigit', 'isAlphabetic'].includes(name)
-      ? currentPosition + collectCharacters(name, input, currentPosition).length
-      : currentPosition + 1,
-    [
-       ...tokens,
-       {
-         type: TOKEN_TYPES[name],
-         value: ['isDigit', 'isAlphabetic'].includes(name)
-          ? collectCharacters(name, input, currentPosition)
-          : input[currentPosition],
-       }
-    ]
-   );
+  if (token) {
+    const [name] = token;
+    return tokenize(
+      input,
+      ['isDigit', 'isAlphabetic'].includes(name)
+        ? currentPosition + collectCharacters(name, input, currentPosition).length
+        : currentPosition + 1,
+      [
+        ...tokens,
+        {
+          type: TOKEN_TYPES[name],
+          value: ['isDigit', 'isAlphabetic'].includes(name)
+            ? collectCharacters(name, input, currentPosition)
+            : input[currentPosition],
+        },
+      ],
+    );
   }
   throw new TokenError(input[currentPosition]);
 }
 
 module.exports = {
-  tokenize
+  tokenize,
 };
