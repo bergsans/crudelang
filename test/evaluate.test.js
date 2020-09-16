@@ -40,7 +40,7 @@ test('x = 3; x = x + 1; return x;', () => {
   `)).toBe(4);
 });
 
-test('if > true', () => {
+test('if > true (GT)', () => {
   const r = parse(tokenize(`
   {
     x = 4;
@@ -55,7 +55,22 @@ test('if > true', () => {
   expect(evaluate(r)).toEqual(10);
 });
 
-test('if > false', () => {
+test('if > true (LT)', () => {
+  const r = parse(tokenize(`
+  {
+    x = 4;
+    y = 5;
+    if(x < 100) {
+      y = 3;
+      x = 10;
+    }
+    return x;
+  }
+  `));
+  expect(evaluate(r)).toEqual(10);
+});
+
+test('if > false (GT)', () => {
   const r = parse(tokenize(`
   {
     x = 4;

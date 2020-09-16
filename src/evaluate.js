@@ -41,6 +41,10 @@ function visitIfStatement(node, env) {
     if (evaluate(node.test.value.value.left, env) > evaluate(node.test.value.value.right, env)) {
       return evaluate(node.consequent, env);
     }
+  } else if (node.test.value.value.op.type === 'LT') {
+    if (evaluate(node.test.value.value.left, env) < evaluate(node.test.value.value.right, env)) {
+      return evaluate(node.consequent, env);
+    }
   }
 }
 

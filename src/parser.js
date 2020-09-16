@@ -49,7 +49,7 @@ function parse(tokens, body = [], node) {
     };
   } if (token.type === 'CLOSE_PAREN') {
     return node;
-  } if (['MULT', 'DIV', 'PLUS', 'MINUS', 'GT'].includes(token.type)) {
+  } if (['MULT', 'DIV', 'PLUS', 'MINUS', 'GT', 'LT'].includes(token.type)) {
     return {
       type: 'BinaryExpression',
       value: {
