@@ -31,9 +31,11 @@ function visitExpression(node, env) {
 }
 
 function visitIfStatement(node, env) {
+  console.log(node)
   if(node.test.value.value.op.type === 'GT') {
     if(evaluate(node.test.value.value.left, env) > evaluate(node.test.value.value.right, env)) {
-      return evaluate(node.consequent);
+      console.log('---------------- HERE --------------')
+      return evaluate(node.consequent, env);
     } else {
       return;
     }
@@ -46,11 +48,16 @@ function evaluate(input, env={}) {
     const evaluatedExpressions = input.map((x) => evaluate(x, env))
     // remove side-effects and go for first return
     return evaluatedExpressions.find((x) => x !== undefined);
-  } else if(input.type === 'ReturnStatement') {
+  } else if(input.type === 'Scope') {
+    return evaluate(input.body, env);
+  }
+
+  else if(input.type === 'ReturnStatement') {
     return evaluate(input.value, env);
   } else if(input.type === 'IfStatement') {
     return visitIfStatement(input, env);
   } else if(input.type === 'Assignment') {
+    console.log(input.value)
     env[input.name] = evaluate(input.value, env);
   } else if(input.type === 'Expression') {
     return visitExpression(input.value, env);

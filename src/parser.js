@@ -1,12 +1,31 @@
 const head = (ts) => ts[0];
 
-function parse(tokens, body=[], node) {
 
+function parse(tokens, body=[], node) {
   let token = tokens.length > 1
     ? tokens.shift()
     : head(tokens);
 
-  if(token.type === 'END') {
+  if(token.type === 'EOF') {
+    return body;
+  }
+
+  else if(token.type === 'OPEN_SCOPE') {
+    if(body.length > 0 && body[body.length - 1].type === 'IfStatement') {
+      body[body.length - 1].consequent = parse(tokens);
+      return parse(tokens, body);
+    } else {
+
+    return parse(tokens, body.concat({
+      type: 'Scope',
+      body: parse(tokens)
+    }));
+    }
+  } else if(token.type === 'CLOSE_SCOPE') {
+    return body;
+  }
+
+  else if(token.type === 'END') {
     return node;
   } else if(token.type === 'INTEGER') {
     return parse(tokens, body, token);
@@ -23,19 +42,21 @@ function parse(tokens, body=[], node) {
       type: 'ReturnStatement',
       value: parse(tokens)
     }));
-  } else if(token.type === 'IDENTIFIER' && token.value === 'if') {
-    return {
+  }
+
+
+  else if(token.type === 'IDENTIFIER' && token.value === 'if') {
+    return parse(tokens, parse(tokens, body.concat({
       type: 'IfStatement',
       test: parse(tokens),
-      consequent: parse(tokens)
-    };
-  } else if(token.type === 'IDENTIFIER') {
-    return parse(tokens, body, token);
-  } else if(token.type === 'OPEN_SCOPE') {
-    return parse(tokens, []);
-  } else if(token.type === 'CLOSE_SCOPE') {
-    return node;
+      }))
+    );
   }
+
+  else if(token.type === 'IDENTIFIER') {
+    return parse(tokens, body, token);
+  }
+
   else if(token.type === 'OPEN_PAREN') {
     return {
       type: 'Expression',
@@ -53,12 +74,64 @@ function parse(tokens, body=[], node) {
       }
     };
   }
-
-  if(token.type === 'EOF') {
-    return node
-      ?  [...body, node]
-      : body;
-  }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//  if(token.type === 'END') {
+//    return node;
+//  } else if(token.type === 'INTEGER') {
+//    return parse(tokens, body, token);
+//  } else if(token.type === 'ASSIGN') {
+//    return parse(tokens);
+//  } else if(token.type === 'IDENTIFIER' && tokens[0].type === 'ASSIGN') {
+//    return parse(tokens, body.concat({
+//      type: 'Assignment',
+//      name: token.value,
+//      value: parse(tokens)
+//    }));
+//  } else if(token.type === 'IDENTIFIER' && token.value === 'return') {
+//    return parse(tokens, body.concat({
+//      type: 'ReturnStatement',
+//      value: parse(tokens)
+//    }));
+//  } else if(token.type === 'IDENTIFIER' && token.value === 'if') {
+//    return {
+//      type: 'IfStatement',
+//      test: parse(tokens),
+//      consequent: parse(tokens)
+//    };
+//  } else if(token.type === 'IDENTIFIER') {
+//    return parse(tokens, body, token);
+//  } 
+//  else if(token.type === 'OPEN_PAREN') {
+//    return {
+//      type: 'Expression',
+//      value: parse(tokens, body, node)
+//    };
+//  } else if(token.type === 'CLOSE_PAREN') {
+//    return node;
+//  } else if(['MULT','DIV', 'PLUS', 'MINUS', 'GT'].includes(token.type)) {
+//    return {
+//      type: 'BinaryExpression',
+//      value: {
+//        left: node,
+//        op: token,
+//        right: parse(tokens)
+//      }
+//    };
+//  }
+//
 }
 
 module.exports = {
