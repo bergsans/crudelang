@@ -70,7 +70,7 @@ test('if > true (LT)', () => {
   expect(evaluate(r)).toEqual(10);
 });
 
-test('if > false (GT)', () => {
+test('if > false (gt)', () => {
   const r = parse(tokenize(`
   {
     x = 4;
@@ -83,4 +83,17 @@ test('if > false (GT)', () => {
   }
   `));
   expect(evaluate(r)).toEqual(4);
+});
+
+test('while', () => {
+  const r = parse(tokenize(`
+  {
+    x = 4;
+    while(x < 20) {
+      x = x + 1;
+    }
+    return x;
+  }
+  `));
+  expect(evaluate(r)).toEqual(20);
 });

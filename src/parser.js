@@ -11,6 +11,9 @@ function parse(tokens, body = [], node) {
     if (body.length > 0 && body[body.length - 1].type === 'IfStatement') {
       body[body.length - 1].consequent = parse(tokens);
       return parse(tokens, body);
+    } if (body.length > 0 && body[body.length - 1].type === 'While') {
+      body[body.length - 1].consequent = parse(tokens);
+      return parse(tokens, body);
     }
     return parse(tokens, body.concat({
       type: 'Scope',
@@ -35,12 +38,21 @@ function parse(tokens, body = [], node) {
       type: 'ReturnStatement',
       value: parse(tokens),
     }));
-  } if (token.type === 'IDENTIFIER' && token.value === 'if') {
+  }
+  if (token.type === 'IDENTIFIER' && token.value === 'if') {
     return parse(tokens, parse(tokens, body.concat({
       type: 'IfStatement',
       test: parse(tokens),
     })));
-  } if (token.type === 'IDENTIFIER') {
+  }
+
+  if (token.type === 'IDENTIFIER' && token.value === 'while') {
+    return parse(tokens, parse(tokens, body.concat({
+      type: 'While',
+      test: parse(tokens),
+    })));
+  }
+  if (token.type === 'IDENTIFIER') {
     return parse(tokens, body, token);
   } if (token.type === 'OPEN_PAREN') {
     return {

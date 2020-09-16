@@ -48,6 +48,18 @@ function visitIfStatement(node, env) {
   }
 }
 
+function visitWhile(node, env) {
+  if (node.test.value.value.op.type === 'GT') {
+    while (evaluate(node.test.value.value.left, env) > evaluate(node.test.value.value.right, env)) {
+      evaluate(node.consequent, env);
+    }
+  } else if (node.test.value.value.op.type === 'LT') {
+    while (evaluate(node.test.value.value.left, env) < evaluate(node.test.value.value.right, env)) {
+      evaluate(node.consequent, env);
+    }
+  }
+}
+
 function evaluate(input, env = {}) {
   if (input === undefined) {
     throw new UndefinedNode();
@@ -60,6 +72,8 @@ function evaluate(input, env = {}) {
     return evaluate(input.value, env);
   } else if (input.type === 'IfStatement') {
     return visitIfStatement(input, env);
+  } else if (input.type === 'While') {
+    return visitWhile(input, env);
   } else if (input.type === 'Assignment') {
     env[input.name] = evaluate(input.value, env);
   } else if (input.type === 'Expression') {
