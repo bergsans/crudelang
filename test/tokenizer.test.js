@@ -6,6 +6,18 @@ test('empty input', () => {
   }]);
 });
 
+test('string', () => {
+  expect(tokenize('"Hello World"')).toEqual([
+    {
+      type: 'STRING',
+      value: '\"Hello World\"',
+    },
+    {
+      type: 'EOF',
+    },
+  ]);
+});
+
 test('1', () => {
   expect(tokenize('1')).toEqual([
     {

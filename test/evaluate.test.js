@@ -12,6 +12,22 @@ test('return 1', () => {
   `)).toBe(1);
 });
 
+test('return Hello', () => {
+  expect(interpret(`
+    {
+      return "Hello";
+    }
+  `)).toBe('Hello');
+});
+
+test('return Hello World', () => {
+  expect(interpret(`
+    {
+      return "Hello" + " " + "World";
+    }
+  `)).toBe('Hello World');
+});
+
 test('return 1 + 2 + 3 + 4', () => {
   expect(interpret(`
     {
@@ -111,3 +127,4 @@ test('print', () => {
   `));
   expect(evaluate(r)).toEqual(20);
 });
+

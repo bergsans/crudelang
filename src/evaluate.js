@@ -1,16 +1,4 @@
-const { red } = require('chalk');
-
-class UnsafeDivision extends Error {
-  constructor(node) {
-    super(red(`Division by zero is unsafe. You cannot divide ${node.left.value} with ${node.right.value}`));
-  }
-}
-
-class UndefinedNode extends Error {
-  constructor(node) {
-    super(red('Error in evaluation. Node is undefined.'));
-  }
-}
+const { UnsafeDivision, UndefinedNode } = require('./Error.js');
 
 function visitBinaryExpression(node, env) {
   if (node.op.type === 'MULT') {
@@ -87,7 +75,9 @@ function evaluate(input, env = {}) {
   } else if (input.type === 'BinaryExpression') {
     return visitBinaryExpression(input.value, env);
   } else if (input.type === 'INTEGER') {
-    return parseInt(input.value, env);
+    return parseInt(input.value, 10);
+  } else if (input.type === 'STRING') {
+    return input.value.replace(/\"/g, '');
   } else if (input.type === 'IDENTIFIER') {
     return env[input.value];
   }

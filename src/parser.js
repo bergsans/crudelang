@@ -25,6 +25,8 @@ function parse(tokens, body = [], node) {
     return node;
   } if (token.type === 'INTEGER') {
     return parse(tokens, body, token);
+  } if (token.type === 'STRING') {
+    return parse(tokens, body, token);
   } if (token.type === 'ASSIGN') {
     return parse(tokens);
   } if (token.type === 'IDENTIFIER' && tokens[0].type === 'ASSIGN') {
@@ -38,28 +40,22 @@ function parse(tokens, body = [], node) {
       type: 'ReturnStatement',
       value: parse(tokens),
     }));
-  }
-  if (token.type === 'IDENTIFIER' && token.value === 'if') {
+  } if (token.type === 'IDENTIFIER' && token.value === 'if') {
     return parse(tokens, parse(tokens, body.concat({
       type: 'IfStatement',
       test: parse(tokens),
     })));
-  }
-
-  if (token.type === 'IDENTIFIER' && token.value === 'print') {
+  } if (token.type === 'IDENTIFIER' && token.value === 'print') {
     return parse(tokens, parse(tokens, body.concat({
       type: 'PrintStatement',
       msg: parse(tokens),
     })));
-  }
-
-  if (token.type === 'IDENTIFIER' && token.value === 'while') {
+  } if (token.type === 'IDENTIFIER' && token.value === 'while') {
     return parse(tokens, parse(tokens, body.concat({
       type: 'While',
       test: parse(tokens),
     })));
-  }
-  if (token.type === 'IDENTIFIER') {
+  } if (token.type === 'IDENTIFIER') {
     return parse(tokens, body, token);
   } if (token.type === 'OPEN_PAREN') {
     return {

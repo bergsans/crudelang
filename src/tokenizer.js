@@ -24,6 +24,7 @@ const tokenChecks = {
   isEndOfStatement: (char) => char === ';',
   isOpenBlock: (char) => char === '{',
   isCloseBlock: (char) => char === '}',
+  isQuote: (char) => /[A-Za-z 0-9".!:,]/.test(char),
 };
 
 const TOKEN_TYPES = {
@@ -42,6 +43,7 @@ const TOKEN_TYPES = {
   isEndOfStatement: 'END',
   isOpenBlock: 'OPEN_SCOPE',
   isCloseBlock: 'CLOSE_SCOPE',
+  isQuote: 'STRING',
 };
 
 const removeWhiteSpace = (token) => token.type !== 'WHITE_SPACE';
@@ -67,14 +69,14 @@ function tokenize(input, currentPosition = 0, tokens = []) {
     const [name] = token;
     return tokenize(
       input,
-      ['isDigit', 'isAlphabetic'].includes(name)
+      ['isDigit', 'isAlphabetic', 'isQuote'].includes(name)
         ? currentPosition + collectCharacters(name, input, currentPosition).length
         : currentPosition + 1,
       [
         ...tokens,
         {
           type: TOKEN_TYPES[name],
-          value: ['isDigit', 'isAlphabetic'].includes(name)
+          value: ['isDigit', 'isAlphabetic', 'isQuote'].includes(name)
             ? collectCharacters(name, input, currentPosition)
             : input[currentPosition],
         },
