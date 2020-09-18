@@ -24,7 +24,9 @@ const tokenChecks = {
   isEndOfStatement: (char) => char === ';',
   isOpenBlock: (char) => char === '{',
   isCloseBlock: (char) => char === '}',
-  isQuote: (char) => /[A-Za-z 0-9".!:,]/.test(char),
+  isQuote: (char) => /[A-Za-z 0-9".!:]/.test(char),
+  isEqual: (char) => char === '?',
+  isComma: (char) => char === ','
 };
 
 const TOKEN_TYPES = {
@@ -44,6 +46,8 @@ const TOKEN_TYPES = {
   isOpenBlock: 'OPEN_SCOPE',
   isCloseBlock: 'CLOSE_SCOPE',
   isQuote: 'STRING',
+  isEqual: 'EQUALS',
+  isComma: 'ARG_SEP'
 };
 
 const removeWhiteSpace = (token) => token.type !== 'WHITE_SPACE';

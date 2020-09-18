@@ -3,22 +3,43 @@ const head = (ts) => ts[0];
 function parse(tokens, body = [], node) {
   const token = tokens.length > 1
     ? tokens.shift()
-    : head(tokens);
+    : tokens[0];
 
   if (token.type === 'EOF') {
-    return body;
+    console.log(body, tokens)
+    return {
+      type: 'Scope',
+      body: body.length > 0 ? [...body] : body,
+    };
+  } if (token.type === 'OPEN_PAREN') {
+    if (body.length > 0 && ['PrintStatement'].includes(body[body.length - 1].type)) {
+      let args = [];
+      while(tokens[0].type !== 'CLOSE_PAREN') {
+        if(tokens[0].type !== 'ARG_SEP') {
+          args.push(tokens[0]);
+        }
+        tokens.shift();
+      }
+      tokens.shift();
+      tokens.shift();
+      body[body.length - 1].args = args;
+      return parse(tokens, body, node);
+    }
   } if (token.type === 'OPEN_SCOPE') {
     if (body.length > 0 && body[body.length - 1].type === 'IfStatement') {
-      body[body.length - 1].consequent = parse(tokens);
+      body[body.length - 1].consequent = {
+        type: 'Scope',
+        body: parse(tokens),
+      };
       return parse(tokens, body);
     } if (body.length > 0 && body[body.length - 1].type === 'While') {
-      body[body.length - 1].consequent = parse(tokens);
+      body[body.length - 1].consequent = {
+        type: 'Scope',
+        body: parse(tokens),
+      };
       return parse(tokens, body);
     }
-    return parse(tokens, body.concat({
-      type: 'Scope',
-      body: parse(tokens),
-    }));
+    return parse(tokens, body, node);
   } if (token.type === 'CLOSE_SCOPE') {
     return body;
   } if (token.type === 'END') {
@@ -45,26 +66,35 @@ function parse(tokens, body = [], node) {
       type: 'IfStatement',
       test: parse(tokens),
     })));
-  } if (token.type === 'IDENTIFIER' && token.value === 'print') {
+  }
+
+  if (token.type === 'IDENTIFIER' && token.value === 'print') {
     return parse(tokens, parse(tokens, body.concat({
-      type: 'PrintStatement',
-      msg: parse(tokens),
+      type: 'PrintStatement'
     })));
-  } if (token.type === 'IDENTIFIER' && token.value === 'while') {
+  }
+
+  if (token.type === 'IDENTIFIER' && token.value === 'rectangle') {
+    return parse(tokens, parse(tokens, body.concat({
+      type: 'RectangleStatement'
+    })));
+  }
+  if (token.type === 'IDENTIFIER' && token.value === 'while') {
     return parse(tokens, parse(tokens, body.concat({
       type: 'While',
       test: parse(tokens),
     })));
   } if (token.type === 'IDENTIFIER') {
     return parse(tokens, body, token);
-  } if (token.type === 'OPEN_PAREN') {
+  }
+  if (token.type === 'OPEN_PAREN') {
     return {
       type: 'Expression',
       value: parse(tokens, body, node),
     };
   } if (token.type === 'CLOSE_PAREN') {
     return node;
-  } if (['MULT', 'DIV', 'PLUS', 'MINUS', 'GT', 'LT'].includes(token.type)) {
+  } if (['MULT', 'DIV', 'PLUS', 'MINUS', 'GT', 'LT', 'EQUALS'].includes(token.type)) {
     return {
       type: 'BinaryExpression',
       value: {

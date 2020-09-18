@@ -49,22 +49,30 @@ function visitWhile(node, env) {
 }
 
 function print(output, env) {
-  console.log(evaluate(output.value, env));
+  const out = output.args.reduce((str, v) => `${str}${evaluate(v, env)}`, '');
+  console.log(out);
+}
+
+function rectangle(node, env) {
+  const [x,y,w,h] = node.args;
+  // ctx.strokeStyle = 'white';
+  // ctx.strokeRect(x,y, w, h);
 }
 
 function evaluate(input, env = {}) {
   if (input === undefined) {
     throw new UndefinedNode();
-  } else if (Array.isArray(input)) {
-    const evaluatedExpressions = input.map((x) => evaluate(x, env));
+  } if (input.type === 'Scope') {
+    if (!Array.isArray(input.body)) {
+      return evaluate(input.body, env);
+    }
+    const evaluatedExpressions = input.body.map((x) => evaluate(x, env));
     return evaluatedExpressions.find((x) => x !== undefined);
-  } else if (input.type === 'Scope') {
-    return evaluate(input.body, env);
-  } else if (input.type === 'ReturnStatement') {
+  } if (input.type === 'ReturnStatement') {
     return evaluate(input.value, env);
-  } else if (input.type === 'IfStatement') {
+  } if (input.type === 'IfStatement') {
     return visitIfStatement(input, env);
-  } else if (input.type === 'PrintStatement') {
+  } if (input.type === 'PrintStatement') {
     print(input.msg, env);
   } else if (input.type === 'While') {
     return visitWhile(input, env);
