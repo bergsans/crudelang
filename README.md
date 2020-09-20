@@ -6,7 +6,7 @@ You can [try a beta version](https://herebeseaswines.net/crudelang/).
 
 At this stage, crudelang is less advanced than a similar project
 I've made, [One Page Lisp](https://github.com/bergsans/one-page-lisp). Too me,
-it seems easier to make a Lisp-ish interpreter than an imperative language.
+it seems easier to make a Lisp-ish language than an imperative language.
 I believe this would account for the fact that we so often see tutorials on how to make
 a Lisp-language (rather than an imperative). An imperative language (at least
 at a minimalistic scale) is messier.
