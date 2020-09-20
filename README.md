@@ -1,6 +1,6 @@
 ![](crudelang.png)
 
-This is a learning project: a small language named crudelang.
+This is a learning project in progress: a small language named crudelang.
 I wanted to attempt to make a small language, built upon 'imperative' principles.
 You can [try a beta version](https://herebeseaswines.net/crudelang/).
 
@@ -35,4 +35,3 @@ I have quite a few features on my todo list:
 npm install
 npm start
 ```
-
