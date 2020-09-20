@@ -1,11 +1,7 @@
-const { tokenize } = require('./tokenizer.js');
-const { parse } = require('./parser.js');
-const { evaluate } = require('./evaluate.js');
+import { tokenize } from './tokenizer.js';
+import { parse } from    './parser.js';
+import { evaluate } from './evaluate.js';
 
-function interpret(input) {
+export function interpret(input) {
   return evaluate(parse(tokenize(input)));
 }
-
-module.exports = {
-  interpret
-};

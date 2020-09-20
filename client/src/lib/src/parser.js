@@ -1,4 +1,4 @@
-function parse(tokens, body = [], node) {
+export function parse(tokens, body = [], node) {
   const token = tokens.length > 1
     ? tokens.shift()
     : tokens[0];
@@ -63,33 +63,26 @@ function parse(tokens, body = [], node) {
       type: 'IfStatement',
       test: parse(tokens),
     })));
-  }
-
-  if (token.type === 'IDENTIFIER' && token.value === 'circle') {
+  } if (token.type === 'IDENTIFIER' && token.value === 'circle') {
     return parse(tokens, parse(tokens, body.concat({
       type: 'CircleStatement',
     })));
-  }
-  if (token.type === 'IDENTIFIER' && token.value === 'print') {
+  } if (token.type === 'IDENTIFIER' && token.value === 'print') {
     return parse(tokens, parse(tokens, body.concat({
       type: 'PrintStatement',
     })));
-  }
-
-  if (token.type === 'IDENTIFIER' && token.value === 'rectangle') {
+  } if (token.type === 'IDENTIFIER' && token.value === 'rectangle') {
     return parse(tokens, parse(tokens, body.concat({
       type: 'RectangleStatement',
     })));
-  }
-  if (token.type === 'IDENTIFIER' && token.value === 'while') {
+  } if (token.type === 'IDENTIFIER' && token.value === 'while') {
     return parse(tokens, parse(tokens, body.concat({
       type: 'While',
       test: parse(tokens),
     })));
   } if (token.type === 'IDENTIFIER') {
     return parse(tokens, body, token);
-  }
-  if (token.type === 'OPEN_PAREN') {
+  } if (token.type === 'OPEN_PAREN') {
     return {
       type: 'Expression',
       value: parse(tokens, body, node),
@@ -108,6 +101,3 @@ function parse(tokens, body = [], node) {
   }
 }
 
-module.exports = {
-  parse,
-};

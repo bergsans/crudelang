@@ -1,4 +1,4 @@
-const { UnsafeDivision, UndefinedNode } = require('./Error.js');
+import { UnsafeDivision, UndefinedNode }  from './Error.js';
 
 function visitBinaryExpression(node, env) {
   if (node.op.type === 'MULT') {
@@ -77,7 +77,7 @@ function circle(node, env) {
   ctx.fill();
 }
 
-function evaluate(input, env = {}) {
+export function evaluate(input, env = {}) {
   if (input === undefined) {
     throw new UndefinedNode();
   } if (input.type === 'Scope') {
@@ -112,7 +112,3 @@ function evaluate(input, env = {}) {
     return env[input.value];
   }
 }
-
-module.exports = {
-  evaluate,
-};

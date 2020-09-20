@@ -61,7 +61,7 @@ function collectCharacters(fnName, input, currentPosition) {
   return tempValue;
 }
 
-function tokenize(input, currentPosition = 0, tokens = []) {
+export function tokenize(input, currentPosition = 0, tokens = []) {
   if (isEOF(input[currentPosition])) {
     return [...tokens, { type: 'EOF' }].filter(removeWhiteSpace);
   }
@@ -90,6 +90,3 @@ function tokenize(input, currentPosition = 0, tokens = []) {
   throw new TokenError(input[currentPosition]);
 }
 
-module.exports = {
-  tokenize,
-};
