@@ -54,12 +54,32 @@ function print(output, env) {
 }
 
 function rectangle(node, env) {
-  const [x,y,w,h] = node.args;
-  // ctx.strokeStyle = 'white';
-  // ctx.strokeRect(x,y, w, h);
+  const canvas = document.querySelector('#output');
+  const ctx = canvas.getContext('2d');
+  const x = evaluate(node.args[0], env);
+  const y = evaluate(node.args[1], env);
+  const w = evaluate(node.args[2], env);
+  const h = evaluate(node.args[3], env);
+  const color = evaluate(node.args[4], env);
+  ctx.fillStyle = color;
+  ctx.fillRect(x, y, w, h);
+}
+
+function circle(node, env) {
+  const canvas = document.querySelector('#output');
+  const ctx = canvas.getContext('2d');
+  const x = evaluate(node.args[0], env);
+  const y = evaluate(node.args[1], env);
+  const r = evaluate(node.args[2], env);
+  const color = evaluate(node.args[3], env);
+  ctx.fillStyle = color;
+  ctx.arc(x, y, r, 0, 2 * Math.PI, false);
+  ctx.fill();
+  ctx.stroke();
 }
 
 function evaluate(input, env = {}) {
+
   if (input === undefined) {
     throw new UndefinedNode();
   } if (input.type === 'Scope') {
@@ -73,8 +93,13 @@ function evaluate(input, env = {}) {
   } if (input.type === 'IfStatement') {
     return visitIfStatement(input, env);
   } if (input.type === 'PrintStatement') {
-    print(input.msg, env);
-  } else if (input.type === 'While') {
+    print(input, env);
+  } if(input.type === 'RectangleStatement') {
+    rectangle(input, env);
+  } if(input.type === 'CircleStatement') {
+    circle(input, env);
+  }
+  else if (input.type === 'While') {
     return visitWhile(input, env);
   } else if (input.type === 'Assignment') {
     env[input.name] = evaluate(input.value, env);

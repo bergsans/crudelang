@@ -6,13 +6,12 @@ function parse(tokens, body = [], node) {
     : tokens[0];
 
   if (token.type === 'EOF') {
-    console.log(body, tokens)
     return {
       type: 'Scope',
       body: body.length > 0 ? [...body] : body,
     };
   } if (token.type === 'OPEN_PAREN') {
-    if (body.length > 0 && ['PrintStatement'].includes(body[body.length - 1].type)) {
+    if (body.length > 0 && ['PrintStatement', 'CircleStatement', 'RectangleStatement'].includes(body[body.length - 1].type)) {
       let args = [];
       while(tokens[0].type !== 'CLOSE_PAREN') {
         if(tokens[0].type !== 'ARG_SEP') {
@@ -68,6 +67,11 @@ function parse(tokens, body = [], node) {
     })));
   }
 
+  if (token.type === 'IDENTIFIER' && token.value === 'circle') {
+    return parse(tokens, parse(tokens, body.concat({
+      type: 'CircleStatement'
+    })));
+  }
   if (token.type === 'IDENTIFIER' && token.value === 'print') {
     return parse(tokens, parse(tokens, body.concat({
       type: 'PrintStatement'

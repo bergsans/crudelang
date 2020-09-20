@@ -4,20 +4,81 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  background-color: black;
+  background-color: #002B36;
   font-family: 'Roboto', sans-serif;
 }
 
 .App > div {
-  margin: 0;
   padding: 0;
   width: 50%;
   height: 100%;
+  background-color: #F5F2F0;
+  border-right: 1px solid black;
+}
+
+.Header {
+  background-color: #F5F2F0;
+  height: 100px;
+  font-size: 60%;
+}
+
+*:focus {
+  outline:none;
+  border:none;
 }
 
 .Editor {
   margin: 0;
   padding: 0;
-  height: 100%;
   font-size: 150%;
+  background-color: #F5F2F0;
+}
+
+.arrow {
+  position: relative;
+  top: -2px;
+  left:0;
+}
+
+.EWrap {
+  width: 99%;
+  height: calc(99% - 100px);
+
+}
+
+canvas {
+}
+
+.Logo {
+  float:left;
+  margin-left: 25px;
+  height: 100px;
+}
+
+.Output {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.Button {
+  float: right;
+  text-align: center;
+  width: 100px;
+  font-size: 200%;
+  line-height: 100px;
+  font-weight: 700;
+  padding: 2px 2px;
+  color: #657B83;
+  display:block;
+  padding: 0 25px;
+}
+
+.Button:hover {
+  color: black;
+  background-color: #EEE8D5;
+}
+
+.Button:active {
+  background-color: #c4beae;
 }
