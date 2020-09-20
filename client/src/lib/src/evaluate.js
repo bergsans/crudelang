@@ -75,11 +75,9 @@ function circle(node, env) {
   ctx.fillStyle = color;
   ctx.arc(x, y, r, 0, 2 * Math.PI, false);
   ctx.fill();
-  ctx.stroke();
 }
 
 function evaluate(input, env = {}) {
-
   if (input === undefined) {
     throw new UndefinedNode();
   } if (input.type === 'Scope') {
@@ -94,12 +92,11 @@ function evaluate(input, env = {}) {
     return visitIfStatement(input, env);
   } if (input.type === 'PrintStatement') {
     print(input, env);
-  } if(input.type === 'RectangleStatement') {
+  } if (input.type === 'RectangleStatement') {
     rectangle(input, env);
-  } if(input.type === 'CircleStatement') {
+  } if (input.type === 'CircleStatement') {
     circle(input, env);
-  }
-  else if (input.type === 'While') {
+  } else if (input.type === 'While') {
     return visitWhile(input, env);
   } else if (input.type === 'Assignment') {
     env[input.name] = evaluate(input.value, env);
@@ -110,7 +107,7 @@ function evaluate(input, env = {}) {
   } else if (input.type === 'INTEGER') {
     return parseInt(input.value, 10);
   } else if (input.type === 'STRING') {
-    return input.value.replace(/\"/g, '');
+    return input.value.replace(/"/g, '');
   } else if (input.type === 'IDENTIFIER') {
     return env[input.value];
   }

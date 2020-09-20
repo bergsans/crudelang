@@ -46,9 +46,6 @@
 
 }
 
-canvas {
-}
-
 .Logo {
   float:left;
   margin-left: 25px;
@@ -66,6 +63,7 @@ canvas {
   text-align: center;
   width: 100px;
   font-size: 200%;
+  height: 99px;
   line-height: 100px;
   font-weight: 700;
   padding: 2px 2px;
@@ -77,6 +75,7 @@ canvas {
 .Button:hover {
   color: black;
   background-color: #EEE8D5;
+  border-bottom: 1px solid black;
 }
 
 .Button:active {

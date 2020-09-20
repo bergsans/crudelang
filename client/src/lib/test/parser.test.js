@@ -1,13 +1,12 @@
 const { tokenize } = require('../src/tokenizer.js');
 const { parse } = require('../src/parser.js');
 
-test.only('args', () => {
+test('args', () => {
   const r = parse(tokenize(`
     x = 3;
     y = 4;
     print(1, 2, 3, 4);
     `));
-  console.log(JSON.stringify(r, null,1))
   expect(r).toEqual(
     {
         "type": "Scope",
@@ -56,7 +55,6 @@ test('parse', () => {
     }
     return x;
     `));
-  console.log(JSON.stringify(r, null, 2));
   expect(r).toEqual(
     {
       type: 'Scope',

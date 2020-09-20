@@ -1,5 +1,3 @@
-const head = (ts) => ts[0];
-
 function parse(tokens, body = [], node) {
   const token = tokens.length > 1
     ? tokens.shift()
@@ -12,9 +10,9 @@ function parse(tokens, body = [], node) {
     };
   } if (token.type === 'OPEN_PAREN') {
     if (body.length > 0 && ['PrintStatement', 'CircleStatement', 'RectangleStatement'].includes(body[body.length - 1].type)) {
-      let args = [];
-      while(tokens[0].type !== 'CLOSE_PAREN') {
-        if(tokens[0].type !== 'ARG_SEP') {
+      const args = [];
+      while (tokens[0].type !== 'CLOSE_PAREN') {
+        if (tokens[0].type !== 'ARG_SEP') {
           args.push(tokens[0]);
         }
         tokens.shift();
@@ -69,18 +67,18 @@ function parse(tokens, body = [], node) {
 
   if (token.type === 'IDENTIFIER' && token.value === 'circle') {
     return parse(tokens, parse(tokens, body.concat({
-      type: 'CircleStatement'
+      type: 'CircleStatement',
     })));
   }
   if (token.type === 'IDENTIFIER' && token.value === 'print') {
     return parse(tokens, parse(tokens, body.concat({
-      type: 'PrintStatement'
+      type: 'PrintStatement',
     })));
   }
 
   if (token.type === 'IDENTIFIER' && token.value === 'rectangle') {
     return parse(tokens, parse(tokens, body.concat({
-      type: 'RectangleStatement'
+      type: 'RectangleStatement',
     })));
   }
   if (token.type === 'IDENTIFIER' && token.value === 'while') {
