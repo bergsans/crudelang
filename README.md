@@ -2,7 +2,7 @@
 
 This is a learning project in progress: a small language named crudelang.
 I wanted to attempt to make a small language, built upon 'imperative' principles.
-You can [try a beta version](https://bergsans.github.io/crudelang/).
+You can [try a beta version](https://bergsans.net/crudelang/).
 
 At this stage, crudelang is less advanced than a similar project
 I've made, [One Page Lisp](https://github.com/bergsans/one-page-lisp). Too me,
