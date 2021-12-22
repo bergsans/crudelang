@@ -1,5 +1,7 @@
 ![](crudelang.png)
 
+[Project has moved here.](https://github.com/bergsans/crude-lang-v2)
+
 This is a learning project in progress: a small language named crudelang.
 I wanted to attempt to make a small language, built upon 'imperative' principles.
 You can [try a beta version](https://bergsans.net/crudelang/).
